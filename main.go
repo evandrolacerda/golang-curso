@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 )
 
@@ -84,5 +85,68 @@ func main() {
 	}
 
 	pessoa1.dizerNome()
+
+	var numero int = 50
+	var ponteiro *int = &numero
+
+	fmt.Println("Valor da variável 'num':", numero)
+	fmt.Println("Endereço de memória de 'num':", &numero)
+	fmt.Println("Valor apontado pelo ponteiro 'ptr':", *ponteiro)
+	fmt.Println("Endereço de memória apontado pelo ponteiro 'ptr':", ponteiro)
+
+	*ponteiro = 1000
+
+	fmt.Println("Valor da variável 'num':", numero)
+
+	var numero1 int = 50
+	var numero2 = 2
+
+	var soma = numero1 + numero2
+	var subtracao = numero1 - numero2
+	var multiplicacao = numero1 * numero2
+	var divisao = numero1 / numero2
+	var modulo = numero1 % numero2
+
+	fmt.Println("Soma ", soma)
+	fmt.Println("Subtração ", subtracao)
+	fmt.Println("Multiplicação ", multiplicacao)
+	fmt.Println("Divisão ", divisao)
+	fmt.Println("Módulo ", modulo)
+
+	//operadores Lógicos
+
+	if numero1 > 20 && numero2 < 10 {
+		fmt.Println("Verdadeiro")
+	} else {
+		fmt.Println("Falso")
+	}
+
+	if modulo == 0 {
+		fmt.Println("Par")
+	} else {
+		fmt.Println("Ímpar")
+	}
+
+	if numero1 > 10 || numero2 < 10 {
+		fmt.Println("Verdadeiro")
+	} else {
+		fmt.Println("Falso")
+	}
+
+	if numero1 <= 10 {
+		fmt.Println("Verdadeiro")
+	} else {
+		fmt.Println("Falso")
+	}
+
+	if numero1 >= 10 {
+		fmt.Println("Verdadeiro")
+	} else {
+		fmt.Println("Falso")
+	}
+
+	potencia := math.Pow(2, 8)
+
+	fmt.Println("Potência ", potencia)
 
 }
