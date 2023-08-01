@@ -1,18 +1,25 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"curso-golang-2/controllers/livro"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World!")
+	roteador := gin.Default()
+
+	roteador.GET("/teste", func(contexto *gin.Context) {
+
+		contexto.JSON(200, gin.H{
+			"mensagem": "Olá mundo!",
+		})
 	})
 
-	http.ListenAndServe(":8090", nil)
+	roteador.POST("/livros", livro.CriarLivro)
+	roteador.GET("/livros", livro.BuscarLivros)
 
-	fmt.Scanf("Press any key to exit...")
+	roteador.Run(":8050")
 
 }
