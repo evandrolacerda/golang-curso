@@ -19,7 +19,9 @@ func main() {
 
 	roteador.POST("/livros", livro.CriarLivro)
 	roteador.GET("/livros", livro.BuscarLivros)
+	roteador.GET("/livros/:id", livro.BuscarLivro)
+	roteador.PUT("/livros/:id", livro.AtualizarLivro)
 
-	roteador.Run(":8050")
+	roteador.Run(":8040")
 
 }
