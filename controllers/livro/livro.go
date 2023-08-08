@@ -94,7 +94,7 @@ func BuscarLivros(contexto *gin.Context) {
 
 	defer conexao.Close()
 
-	query := "SELECT * FROM livros"
+	query := "SELECT id, titulo, autor FROM livros"
 
 	resultado, erro := conexao.Query(query)
 
@@ -134,7 +134,7 @@ func BuscarLivro(contexto *gin.Context) {
 
 	defer conexao.Close()
 
-	query := "SELECT TOP 1 id, autor, titulo FROM livros WHERE id = ?"
+	query := "EXEC listar_livros @id = ?"
 
 	resultado, _ := conexao.Query(query, id)
 
@@ -211,5 +211,53 @@ func AtualizarLivro(contexto *gin.Context) {
 	livro.Titulo = requisicao.Titulo
 
 	contexto.JSON(http.StatusOK, livro)
+
+}
+
+func DeletarLivro(contexto *gin.Context) {
+	id := contexto.Param("id")
+
+	conexao, erro := database.Conectar()
+
+	if erro != nil {
+		contexto.JSON(http.StatusInternalServerError, gin.H{
+			"erro": erro.Error(),
+		})
+		return
+	}
+
+	defer conexao.Close()
+
+	query := "SELECT TOP 1 id, autor, titulo FROM livros WHERE id = ?"
+
+	resultado, _ := conexao.Query(query, id)
+
+	if !resultado.Next() {
+		contexto.JSON(http.StatusNotFound, gin.H{
+			"mensagem": "Livro não encontrado",
+		})
+		return
+	}
+
+	queryDelete := "DELETE FROM livros WHERE id = ?"
+
+	resultado, erro = conexao.Query(queryDelete, id)
+
+	if erro != nil {
+		contexto.JSON(http.StatusInternalServerError, gin.H{
+			"erro": erro.Error(),
+		})
+		return
+	}
+
+	if resultado != nil {
+
+		contexto.JSON(http.StatusNoContent, nil)
+	} else {
+		contexto.JSON(http.StatusNotFound, gin.H{
+			"mensagem": "Livro não encontrado",
+		})
+		return
+	}
 
 }
